@@ -86,6 +86,7 @@ class Module(ModuleBase):
         else:
             self.q.put([Action.copyToClipboard, selection[1]])
             self.q.put([Action.close])
+            self.q.put([Action.replaceEntryList, list(self.entries.keys())])
 
     def runCommand(self, command, printOnSuccess=False, hideErrors=False):
         pass
