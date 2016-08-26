@@ -79,7 +79,7 @@ class Module(ModuleBase):
 
             cache = {'time': time.time(), 'data': []}
             cache["data"].append("{} ({})".format(data['name'], data["sys"]["country"]))
-            cache["data"].append("{:.2f} °C / {:.2f} °F".format(data["main"]["temp"] - 273.15, data["main"]["temp"] * 9 / 5))
+            cache["data"].append("{:.2f} °C / {:.2f} °F".format(data["main"]["temp"] - 273.15, data["main"]["temp"] * 9 / 5 - 459.67))
             cache["data"].append(data["weather"][0]["description"].capitalize())
             self.cachedCities[cityId] = cache
             self.q.put([Action.replaceEntryList, cache["data"]])
