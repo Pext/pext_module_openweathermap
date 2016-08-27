@@ -23,7 +23,7 @@ from urllib.request import urlopen
 from urllib.error import URLError
 
 from pext_base import ModuleBase
-from pext_helpers import Action
+from pext_helpers import Action, SelectionType
 
 
 class Module(ModuleBase):
@@ -156,10 +156,10 @@ class Module(ModuleBase):
             self.q.put([Action.replaceEntryList, list(self.entries.keys())])
         elif len(selection) == 1:
             parts = selection[0]["value"].split(" ")
-            if selection[0]['type'] == 'entry':
+            if selection[0]['type'] == SelectionType.entry:
                 # Entry selected, act is if we called the weather function to
                 # reduce code repetition
-                self.q.put([Action.setSelection, [{'type': 'command', 'value': 'weather {}'.format(" ".join(parts))}]])
+                self.q.put([Action.setSelection, [{'type': SelectionType.command, 'value': 'weather {}'.format(" ".join(parts))}]])
                 return
 
             cityId = self._getCityId(" ".join(parts[1:]))
@@ -174,7 +174,7 @@ class Module(ModuleBase):
             else:
                 self.q.put([Action.criticalError, "Unexpected selectionMade value: {}".format(selection)])
         elif len(selection) == 2:
-            if selection[0]["type"] != "command":
+            if selection[0]["type"] != SelectionType.command:
                 self.q.put([Action.criticalError, "Unexpected selectionMade value: {}".format(selection)])
 
             parts = selection[0]["value"].split(" ")
