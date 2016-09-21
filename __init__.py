@@ -48,13 +48,14 @@ class Module(ModuleBase):
                 city = json.loads(line)
                 formattedCity = "{} ({})".format(city['name'], city['country'])
                 self.entries[formattedCity] = city
-        
+
         # While this goes against Pext's module development recommendation to
         # at least show some entries as soon as possible, appending a list of
         # this size using Action.addEntry one-by-one is simply too slow
         self.q.put([Action.replaceEntryList, list(self.entries.keys())])
 
     def _setMainCommands(self):
+        self.q.put([Action.setHeader])
         self.q.put([Action.replaceCommandList, ["weather <full city name>",
                                                 "forecast <full city name>"]])
 
@@ -105,10 +106,10 @@ class Module(ModuleBase):
         data = self.cachedCities[cityId]["data"]
 
         # Format and show
-        formattedData = [self._formatPlaceName(data),
-                         self._formatTemperature(data),
+        formattedData = [self._formatTemperature(data),
                          self._formatWeatherDescription(data)]
 
+        self.q.put([Action.setHeader, self._formatPlaceName(data)])
         self.q.put([Action.replaceCommandList, []])
         self.q.put([Action.replaceEntryList, formattedData])
 
@@ -116,9 +117,10 @@ class Module(ModuleBase):
         for forecastEntry in self.cachedForecasts[cityId]["data"]["list"]:
             if forecastEntry["dt"] == timestamp:
                 cityData = self.cachedForecasts[cityId]["data"]["city"]
-                formattedData = ["{} ({})".format(cityData["name"], cityData["country"]),
-                                 self._formatTemperature(forecastEntry),
+                formattedData = [self._formatTemperature(forecastEntry),
                                  self._formatWeatherDescription(forecastEntry)]
+
+                self.q.put([Action.setHeader, "{} ({})".format(cityData["name"], cityData["country"])])
                 self.q.put([Action.replaceEntryList, formattedData])
 
     def _retrieveForecast(self, cityId):
@@ -141,9 +143,12 @@ class Module(ModuleBase):
             cache = {'time': time.time(), 'data': data}
             self.cachedForecasts[cityId] = cache
 
-        self.q.put([Action.replaceCommandList, []])
         cityData = self.cachedForecasts[cityId]["data"]["city"]
-        self.q.put([Action.replaceEntryList, ["{} ({})".format(cityData["name"], cityData["country"])]])
+
+        self.q.put([Action.setHeader, "{} ({})".format(cityData["name"], cityData["country"])])
+        self.q.put([Action.replaceCommandList, []])
+        self.q.put([Action.replaceEntryList, []])
+
         for forecastEntry in self.cachedForecasts[cityId]["data"]["list"]:
             self.q.put([Action.addEntry, datetime.fromtimestamp(forecastEntry["dt"])])
 
