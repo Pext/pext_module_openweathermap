@@ -99,6 +99,11 @@ class Module(ModuleBase):
                 self.q.put([Action.setSelection, []])
                 return
 
+            if data['cod'] != 200:
+                self.q.put([Action.addError, "Failed to retrieve weather data: {} ({})".format(data['message'], data['cod'])])
+                self.q.put([Action.setSelection, []])
+                return
+
             cache = {'time': time.time(), 'data': data}
             self.cachedCities[cityId] = cache
 
