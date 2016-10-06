@@ -39,10 +39,10 @@ class Module(ModuleBase):
 
         self.scriptLocation = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
         
-        self._setMainCommands()
-        self._getEntries()
+        self._set_main_commands()
+        self._get_entries()
 
-    def _getEntries(self):
+    def _get_entries(self):
         with open(os.path.join(self.scriptLocation, 'city.list.json')) as f:
             for line in f:
                 city = json.loads(line)
@@ -51,57 +51,57 @@ class Module(ModuleBase):
 
         # While this goes against Pext's module development recommendation to
         # at least show some entries as soon as possible, appending a list of
-        # this size using Action.addEntry one-by-one is simply too slow
-        self.q.put([Action.replaceEntryList, list(self.entries.keys())])
+        # this size using Action.add_entry one-by-one is simply too slow
+        self.q.put([Action.replace_entry_list, list(self.entries.keys())])
 
-    def _setMainCommands(self):
-        self.q.put([Action.setHeader])
-        self.q.put([Action.replaceCommandList, ["weather <full city name>",
-                                                "forecast <full city name>"]])
+    def _set_main_commands(self):
+        self.q.put([Action.set_header])
+        self.q.put([Action.replace_command_list, ["weather <full city name>",
+                                                  "forecast <full city name>"]])
 
-    def _getCityId(self, identifier):
+    def _get_city_id(self, identifier):
         return self.entries[identifier]['_id']
 
-    def _formatData(self, data):
+    def _format_data(self, data):
         return [
-                   self._formatPlaceName(data),
-                   self._formatTemperature(data),
-                   self._formatWeatherDescription(data)
+                   self._format_place_name(data),
+                   self._format_temperature(data),
+                   self._format_weather_description(data)
                ]
 
-    def _formatPlaceName(self, data):
+    def _format_place_name(self, data):
         return "{} ({})".format(data['name'], data["sys"]["country"])
 
-    def _formatTemperature(self, data):
+    def _format_temperature(self, data):
         kelvin = data["main"]["temp"]
         celcius = kelvin - 273.15
         fahrenheit = kelvin * 9 / 5 - 459.67
         return "{:.2f} °C / {:.2f} °F".format(celcius, fahrenheit)
 
-    def _formatWeatherDescription(self, data):
+    def _format_weather_description(self, data):
         return data["weather"][0]["description"].capitalize()
 
-    def _showWeather(self, cityId):
+    def _show_weather(self, cityId):
         # Get and cache the data if not in cache
         if not cityId in self.cachedCities or self.cachedCities[cityId]["time"] < time.time() - 600:
             try:
                 httpResponse = urlopen("{}/weather?id={}&appid={}".format(self.baseUrl, cityId, self.key))
             except URLError as e:
-                self.q.put([Action.addError, "Failed to request weather data: {}".format(e)])
-                self.q.put([Action.setSelection, []])
+                self.q.put([Action.add_error, "Failed to request weather data: {}".format(e)])
+                self.q.put([Action.set_selection, []])
                 return
 
             responseData = httpResponse.read().decode("utf-8")
             try:
                 data = json.loads(responseData)
             except json.JSONDecodeError as e:
-                self.q.put([Action.addError, "Failed to decode weather data: {}".format(e)])
-                self.q.put([Action.setSelection, []])
+                self.q.put([Action.add_error, "Failed to decode weather data: {}".format(e)])
+                self.q.put([Action.set_selection, []])
                 return
 
             if data['cod'] != 200:
-                self.q.put([Action.addError, "Failed to retrieve weather data: {} ({})".format(data['message'], data['cod'])])
-                self.q.put([Action.setSelection, []])
+                self.q.put([Action.add_error, "Failed to retrieve weather data: {} ({})".format(data['message'], data['cod'])])
+                self.q.put([Action.set_selection, []])
                 return
 
             cache = {'time': time.time(), 'data': data}
@@ -111,38 +111,38 @@ class Module(ModuleBase):
         data = self.cachedCities[cityId]["data"]
 
         # Format and show
-        formattedData = [self._formatTemperature(data),
-                         self._formatWeatherDescription(data)]
+        formattedData = [self._format_temperature(data),
+                         self._format_weather_description(data)]
 
-        self.q.put([Action.setHeader, self._formatPlaceName(data)])
-        self.q.put([Action.replaceCommandList, []])
-        self.q.put([Action.replaceEntryList, formattedData])
+        self.q.put([Action.set_header, self._format_place_name(data)])
+        self.q.put([Action.replace_command_list, []])
+        self.q.put([Action.replace_entry_list, formattedData])
 
-    def _showForecast(self, cityId, timestamp):
+    def _show_forecast(self, cityId, timestamp):
         for forecastEntry in self.cachedForecasts[cityId]["data"]["list"]:
             if forecastEntry["dt"] == timestamp:
                 cityData = self.cachedForecasts[cityId]["data"]["city"]
-                formattedData = [self._formatTemperature(forecastEntry),
-                                 self._formatWeatherDescription(forecastEntry)]
+                formattedData = [self._format_temperature(forecastEntry),
+                                 self._format_weather_description(forecastEntry)]
 
-                self.q.put([Action.setHeader, "{} ({})".format(cityData["name"], cityData["country"])])
-                self.q.put([Action.replaceEntryList, formattedData])
+                self.q.put([Action.set_header, "{} ({})".format(cityData["name"], cityData["country"])])
+                self.q.put([Action.replace_entry_list, formattedData])
 
-    def _retrieveForecast(self, cityId):
+    def _retrieve_forecast(self, cityId):
         if not cityId in self.cachedForecasts or self.cachedForecasts[cityId]["time"] < time.time() - 600:
             try:
                 httpResponse = urlopen("{}/forecast?id={}&appid={}".format(self.baseUrl, cityId, self.key))
             except URLError as e:
-                self.q.put([Action.addError, "Failed to request weather data: {}".format(e)])
-                self.q.put([Action.setSelection, []])
+                self.q.put([Action.add_error, "Failed to request weather data: {}".format(e)])
+                self.q.put([Action.set_selection, []])
                 return
 
             responseData = httpResponse.read().decode("utf-8") 
             try:
                 data = json.loads(responseData)
             except json.JSONDecodeError as e:
-                self.q.put([Action.addError, "Failed to decode weather data: {}".format(e)])
-                self.q.put([Action.setSelection, []])
+                self.q.put([Action.add_error, "Failed to decode weather data: {}".format(e)])
+                self.q.put([Action.set_selection, []])
                 return
 
             cache = {'time': time.time(), 'data': data}
@@ -150,42 +150,42 @@ class Module(ModuleBase):
 
         cityData = self.cachedForecasts[cityId]["data"]["city"]
 
-        self.q.put([Action.setHeader, "{} ({})".format(cityData["name"], cityData["country"])])
-        self.q.put([Action.replaceCommandList, []])
-        self.q.put([Action.replaceEntryList, []])
+        self.q.put([Action.set_header, "{} ({})".format(cityData["name"], cityData["country"])])
+        self.q.put([Action.replace_command_list, []])
+        self.q.put([Action.replace_entry_list, []])
 
         for forecastEntry in self.cachedForecasts[cityId]["data"]["list"]:
-            self.q.put([Action.addEntry, datetime.fromtimestamp(forecastEntry["dt"])])
+            self.q.put([Action.add_entry, datetime.fromtimestamp(forecastEntry["dt"])])
 
     def stop(self):
         pass
 
-    def selectionMade(self, selection):
+    def selection_made(self, selection):
         if len(selection) == 0:
-            self._setMainCommands()
-            self.q.put([Action.replaceEntryList, list(self.entries.keys())])
+            self._set_main_commands()
+            self.q.put([Action.replace_entry_list, list(self.entries.keys())])
         elif len(selection) == 1:
             parts = selection[0]["value"].split(" ")
             if selection[0]['type'] == SelectionType.entry:
                 # Entry selected, act is if we called the weather function to
                 # reduce code repetition
-                self.q.put([Action.setSelection, [{'type': SelectionType.command, 'value': 'weather {}'.format(" ".join(parts))}]])
+                self.q.put([Action.set_selection, [{'type': SelectionType.command, 'value': 'weather {}'.format(" ".join(parts))}]])
                 return
 
-            cityId = self._getCityId(" ".join(parts[1:]))
+            cityId = self._get_city_id(" ".join(parts[1:]))
 
             # Remove commands
-            self.q.put([Action.replaceCommandList, []])
+            self.q.put([Action.replace_command_list, []])
 
             if parts[0] == "forecast":
-                self._retrieveForecast(cityId)
+                self._retrieve_forecast(cityId)
             elif parts[0] == "weather":
-                self._showWeather(cityId)
+                self._show_weather(cityId)
             else:
-                self.q.put([Action.criticalError, "Unexpected selectionMade value: {}".format(selection)])
+                self.q.put([Action.critical_error, "Unexpected selection_made value: {}".format(selection)])
         elif len(selection) == 2:
             if selection[0]["type"] != SelectionType.command:
-                self.q.put([Action.criticalError, "Unexpected selectionMade value: {}".format(selection)])
+                self.q.put([Action.critical_error, "Unexpected selection_made value: {}".format(selection)])
 
             parts = selection[0]["value"].split(" ")
             if parts[0] == "forecast":
@@ -193,21 +193,21 @@ class Module(ModuleBase):
                     timestamp = selection[1]["value"].timestamp()
                 except AttributeError:
                     # The user selected the city name
-                    self.q.put([Action.setSelection, selection[:-1]])
+                    self.q.put([Action.set_selection, selection[:-1]])
                     return
 
-                self._showForecast(self._getCityId(" ".join(parts[1:])), timestamp)
+                self._show_forecast(self._get_city_id(" ".join(parts[1:])), timestamp)
             elif parts[0] == "weather":
-                self.q.put([Action.copyToClipboard, selection[1]["value"]])
+                self.q.put([Action.copy_to_clipboard, selection[1]["value"]])
                 self.q.put([Action.close])
             else:
-                self.q.put([Action.criticalError, "Unexpected selectionMade value: {}".format(selection)])
+                self.q.put([Action.critical_error, "Unexpected selection_made value: {}".format(selection)])
         elif len(selection) == 3:
             # We can only get this deep if we use forecast, just copy the entry to the clipboard and close
-            self.q.put([Action.copyToClipboard, selection[2]["value"]])
+            self.q.put([Action.copy_to_clipboard, selection[2]["value"]])
             self.q.put([Action.close])
         else:
-            self.q.put([Action.criticalError, "Unexpected selectionMade value: {}".format(selection)])
+            self.q.put([Action.critical_error, "Unexpected selection_made value: {}".format(selection)])
 
-    def processResponse(self, response):
+    def process_response(self, response):
         pass
