@@ -39,8 +39,8 @@ class Module(ModuleBase):
 
         self.scriptLocation = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
         
-        self._set_main_commands()
         self._get_entries()
+        self._set_main_commands()
 
     def _get_entries(self):
         with open(os.path.join(self.scriptLocation, 'city.list.json')) as f:
@@ -52,7 +52,7 @@ class Module(ModuleBase):
         # While this goes against Pext's module development recommendation to
         # at least show some entries as soon as possible, appending a list of
         # this size using Action.add_entry one-by-one is simply too slow
-        self.q.put([Action.replace_entry_list, list(self.entries.keys())])
+        self.q.put([Action.replace_entry_list, sorted(list(self.entries.keys()))])
 
     def _set_main_commands(self):
         self.q.put([Action.set_header])
@@ -162,8 +162,8 @@ class Module(ModuleBase):
 
     def selection_made(self, selection):
         if len(selection) == 0:
+            self.q.put([Action.replace_entry_list, sorted(list(self.entries.keys()))])
             self._set_main_commands()
-            self.q.put([Action.replace_entry_list, list(self.entries.keys())])
         elif len(selection) == 1:
             parts = selection[0]["value"].split(" ")
             if selection[0]['type'] == SelectionType.entry:
