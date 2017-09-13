@@ -32,8 +32,10 @@ class Module(ModuleBase):
         self.baseUrl = "http://api.openweathermap.org/data/2.5"
 
         self.q = q
+        self.settings = settings
 
         self.entries = {}
+        self.context_entries = {}
         self.cachedCities = {}
         self.cachedForecasts = {}
 
@@ -48,16 +50,23 @@ class Module(ModuleBase):
                 city = json.loads(line)
                 formattedCity = "{} ({})".format(city['name'], city['country'])
                 self.entries[formattedCity] = city
+                self.context_entries[formattedCity] = ["Forecast"]
 
+        self._set_entries()
+
+    def _set_entries(self):
         # While this goes against Pext's module development recommendation to
         # at least show some entries as soon as possible, appending a list of
         # this size using Action.add_entry one-by-one is simply too slow
         self.q.put([Action.replace_entry_list, sorted(list(self.entries.keys()))])
+        if self.settings['_api_version'] >= [0, 5, 0]:
+            self.q.put([Action.replace_entry_context_dict, self.context_entries])
 
     def _set_main_commands(self):
         self.q.put([Action.set_header])
-        self.q.put([Action.replace_command_list, ["weather <full city name>",
-                                                  "forecast <full city name>"]])
+        if self.settings['_api_version'] < [0, 5, 0]:
+            self.q.put([Action.replace_command_list, ["weather <full city name>",
+                                                      "forecast <full city name>"]])
 
     def _get_city_id(self, identifier):
         return self.entries[identifier]['_id']
@@ -162,13 +171,18 @@ class Module(ModuleBase):
 
     def selection_made(self, selection):
         if len(selection) == 0:
-            self.q.put([Action.replace_entry_list, sorted(list(self.entries.keys()))])
+            self._set_entries()
             self._set_main_commands()
         elif len(selection) == 1:
             parts = selection[0]["value"].split(" ")
             if selection[0]['type'] == SelectionType.entry:
-                # Entry selected, act is if we called the weather function to
+                # Entry selected, act is if we called the weather/forecast function to
                 # reduce code repetition
+                if self.settings['_api_version'] >= [0, 4, 0]:
+                    if selection[0]['context_option'] == "Forecast":
+                        self.q.put([Action.set_selection, [{'type': SelectionType.command, 'value': 'forecast {}'.format(" ".join(parts))}]])
+                        return
+
                 self.q.put([Action.set_selection, [{'type': SelectionType.command, 'value': 'weather {}'.format(" ".join(parts))}]])
                 return
 
