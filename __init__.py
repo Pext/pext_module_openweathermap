@@ -50,7 +50,7 @@ class Module(ModuleBase):
                 city = json.loads(line)
                 formattedCity = "{} ({})".format(city['name'], city['country'])
                 self.entries[formattedCity] = city
-                self.context_entries[formattedCity] = ["Forecast"]
+                self.context_entries[formattedCity] = ["Current weather", "Forecast"]
 
         self._set_entries()
 
