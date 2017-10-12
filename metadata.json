@@ -11,5 +11,10 @@
   "settings": [{
     "name": "key",
     "description": "Custom API key"
-  }]
+  }],
+  "platforms": [
+    "Linux",
+    "Darwin",
+    "Windows"
+  ]
 }
