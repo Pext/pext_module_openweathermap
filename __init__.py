@@ -45,7 +45,7 @@ class Module(ModuleBase):
         self._set_main_commands()
 
     def _get_entries(self):
-        with open(os.path.join(self.scriptLocation, 'city.list.json')) as f:
+        with open(os.path.join(self.scriptLocation, 'city.list.json'), encoding='utf-8') as f:
             for line in f:
                 city = json.loads(line)
                 formattedCity = "{} ({})".format(city['name'], city['country'])
