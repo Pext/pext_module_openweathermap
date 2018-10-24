@@ -174,26 +174,33 @@ class Module(ModuleBase):
             self._set_entries()
             self._set_main_commands()
         elif len(selection) == 1:
-            parts = selection[0]["value"].split(" ")
+            if self.settings['_api_version'] >= [0, 8, 0]:
+                command = selection[0]['value']
+                args = selection[0]['args']
+            else:
+                parts = selection[0]["value"].split(" ")
+                command = parts[0]
+                args = parts[1:]
+
             if selection[0]['type'] == SelectionType.entry:
                 # Entry selected, act is if we called the weather/forecast function to
                 # reduce code repetition
                 if self.settings['_api_version'] >= [0, 4, 0]:
                     if selection[0]['context_option'] == "Forecast":
-                        self.q.put([Action.set_selection, [{'type': SelectionType.command, 'value': 'forecast {}'.format(" ".join(parts))}]])
+                        self.q.put([Action.set_selection, [{'type': SelectionType.command, 'value': 'forecast {}'.format(" ".join(args))}]])
                         return
 
-                self.q.put([Action.set_selection, [{'type': SelectionType.command, 'value': 'weather {}'.format(" ".join(parts))}]])
+                self.q.put([Action.set_selection, [{'type': SelectionType.command, 'value': 'weather {}'.format(" ".join(args))}]])
                 return
 
-            cityId = self._get_city_id(" ".join(parts[1:]))
+            cityId = self._get_city_id(" ".join(args))
 
             # Remove commands
             self.q.put([Action.replace_command_list, []])
 
-            if parts[0] == "forecast":
+            if command == "forecast":
                 self._retrieve_forecast(cityId)
-            elif parts[0] == "weather":
+            elif command == "weather":
                 self._show_weather(cityId)
             else:
                 self.q.put([Action.critical_error, "Unexpected selection_made value: {}".format(selection)])
@@ -201,8 +208,15 @@ class Module(ModuleBase):
             if selection[0]["type"] != SelectionType.command:
                 self.q.put([Action.critical_error, "Unexpected selection_made value: {}".format(selection)])
 
-            parts = selection[0]["value"].split(" ")
-            if parts[0] == "forecast":
+            if self.settings['_api_version'] >= [0, 8, 0]:
+                command = selection[0]['value']
+                args = selection[0]['args']
+            else:
+                parts = selection[0]["value"].split(" ")
+                command = parts[0]
+                args = parts[1:]
+
+            if command == "forecast":
                 try:
                     timestamp = selection[1]["value"].timestamp()
                 except AttributeError:
@@ -210,8 +224,8 @@ class Module(ModuleBase):
                     self.q.put([Action.set_selection, selection[:-1]])
                     return
 
-                self._show_forecast(self._get_city_id(" ".join(parts[1:])), timestamp)
-            elif parts[0] == "weather":
+                self._show_forecast(self._get_city_id(" ".join(args)), timestamp)
+            elif command == "weather":
                 self.q.put([Action.copy_to_clipboard, selection[1]["value"]])
                 self.q.put([Action.close])
             else:
