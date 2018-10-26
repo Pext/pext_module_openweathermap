@@ -176,7 +176,7 @@ class Module(ModuleBase):
         elif len(selection) == 1:
             if self.settings['_api_version'] >= [0, 8, 0]:
                 command = selection[0]['value']
-                args = selection[0]['args']
+                args = selection[0]['args'] if 'args' in selection[0] else []
             else:
                 parts = selection[0]["value"].split(" ")
                 command = parts[0]
@@ -187,10 +187,16 @@ class Module(ModuleBase):
                 # reduce code repetition
                 if self.settings['_api_version'] >= [0, 4, 0]:
                     if selection[0]['context_option'] == "Forecast":
-                        self.q.put([Action.set_selection, [{'type': SelectionType.command, 'value': 'forecast {}'.format(" ".join(args))}]])
+                        if self.settings['_api_version'] >= [0, 8, 0]:
+                            self.q.put([Action.set_selection, [{'type': SelectionType.command, 'value': 'forecast', 'args': selection[0]['value'].split(" ")}]])
+                        else:
+                            self.q.put([Action.set_selection, [{'type': SelectionType.command, 'value': 'forecast {}'.format(" ".join(args))}]])
                         return
 
-                self.q.put([Action.set_selection, [{'type': SelectionType.command, 'value': 'weather {}'.format(" ".join(args))}]])
+                if self.settings['_api_version'] >= [0, 8, 0]:
+                    self.q.put([Action.set_selection, [{'type': SelectionType.command, 'value': 'weather', 'args': selection[0]['value'].split(" ")}]])
+                else:
+                    self.q.put([Action.set_selection, [{'type': SelectionType.command, 'value': 'weather {}'.format(" ".join(args))}]])
                 return
 
             cityId = self._get_city_id(" ".join(args))
