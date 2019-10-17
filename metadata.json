@@ -8,6 +8,8 @@
   "git_urls": [
     "https://github.com/Pext/pext_module_openweathermap"
   ],
+  "bugtracker": "https://github.com/Pext/pext_module_openweathermap",
+  "bugtracker_type": "github",
   "settings": [{
     "name": "key",
     "description": "Custom API key"
