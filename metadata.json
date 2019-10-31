@@ -10,10 +10,18 @@
   ],
   "bugtracker": "https://github.com/Pext/pext_module_openweathermap",
   "bugtracker_type": "github",
-  "settings": [{
-    "name": "key",
-    "description": "Custom API key"
-  }],
+  "settings": [
+    {
+      "name": "key",
+      "description": "Custom API key"
+    },
+    {
+      "name": "unit",
+      "description": "Preferred temperature unit",
+      "options": ["°C", "°F"],
+      "default": "°C"
+    }
+  ],
   "platforms": [
     "Linux",
     "Darwin",
