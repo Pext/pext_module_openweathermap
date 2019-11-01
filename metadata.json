@@ -12,14 +12,17 @@
   "bugtracker_type": "github",
   "settings": [
     {
-      "name": "key",
-      "description": "Custom API key"
-    },
-    {
       "name": "unit",
       "description": "Preferred temperature unit",
-      "options": ["°C", "°F"],
+      "options": [
+        "°C",
+        "°F"
+      ],
       "default": "°C"
+    },
+    {
+      "name": "key",
+      "description": "Custom API key"
     }
   ],
   "platforms": [
