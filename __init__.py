@@ -34,6 +34,8 @@ class Module(ModuleBase):
         self.q = q
         self.settings = settings
 
+        self.unit = "°C" if ("unit" not in settings) else settings["unit"]
+
         self.entries = {}
         self.context_entries = {}
         self.cachedCities = {}
@@ -85,7 +87,7 @@ class Module(ModuleBase):
         kelvin = data["main"]["temp"]
         celcius = kelvin - 273.15
         fahrenheit = kelvin * 9 / 5 - 459.67
-        return "{:.2f} °C / {:.2f} °F".format(celcius, fahrenheit)
+        return "{:.2f} °C".format(celcius) if (self.unit == "°C") else "{:.2f} °F".format(fahrenheit)
 
     def _format_weather_description(self, data):
         return data["weather"][0]["description"].capitalize()
