@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import gettext
 import json
 import os
 import time
@@ -28,6 +29,14 @@ from pext_helpers import Action, SelectionType
 
 class Module(ModuleBase):
     def init(self, settings, q):
+        try:
+            lang = gettext.translation('pext_module_weather', localedir=os.path.join(os.path.dirname(os.path.abspath(__file__)), 'locale'), languages=[settings['_locale']])
+        except FileNotFoundError:
+            lang = gettext.NullTranslations()
+            print("No {} translation available for pext_module_weather".format(settings['_locale']))
+
+        lang.install()
+
         self.key = "c98d3515966557887e4e0c5b656b7001" if ("key" not in settings) else settings['key']
         self.baseUrl = "http://api.openweathermap.org/data/2.5"
 
@@ -44,7 +53,6 @@ class Module(ModuleBase):
         self.scriptLocation = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
         
         self._get_entries()
-        self._set_main_commands()
 
     def _get_entries(self):
         with open(os.path.join(self.scriptLocation, 'city.list.json'), encoding='utf-8') as f:
@@ -52,7 +60,7 @@ class Module(ModuleBase):
                 city = json.loads(line)
                 formattedCity = "{} ({})".format(city['name'], city['country'])
                 self.entries[formattedCity] = city
-                self.context_entries[formattedCity] = ["Current weather", "Forecast"]
+                self.context_entries[formattedCity] = [_("Current weather"), _("Forecast")]
 
         self._set_entries()
 
@@ -63,12 +71,6 @@ class Module(ModuleBase):
         self.q.put([Action.replace_entry_list, sorted(list(self.entries.keys()))])
         if self.settings['_api_version'] >= [0, 5, 0]:
             self.q.put([Action.replace_entry_context_dict, self.context_entries])
-
-    def _set_main_commands(self):
-        self.q.put([Action.set_header])
-        if self.settings['_api_version'] < [0, 5, 0]:
-            self.q.put([Action.replace_command_list, ["weather <full city name>",
-                                                      "forecast <full city name>"]])
 
     def _get_city_id(self, identifier):
         return self.entries[identifier]['_id']
@@ -98,7 +100,7 @@ class Module(ModuleBase):
             try:
                 httpResponse = urlopen("{}/weather?id={}&appid={}".format(self.baseUrl, cityId, self.key))
             except URLError as e:
-                self.q.put([Action.add_error, "Failed to request weather data: {}".format(e)])
+                self.q.put([Action.add_error, _("Failed to request weather data: {}").format(e)])
                 self.q.put([Action.set_selection, []])
                 return
 
@@ -106,12 +108,12 @@ class Module(ModuleBase):
             try:
                 data = json.loads(responseData)
             except json.JSONDecodeError as e:
-                self.q.put([Action.add_error, "Failed to decode weather data: {}".format(e)])
+                self.q.put([Action.add_error, _("Failed to decode weather data: {}").format(e)])
                 self.q.put([Action.set_selection, []])
                 return
 
             if data['cod'] != 200:
-                self.q.put([Action.add_error, "Failed to retrieve weather data: {} ({})".format(data['message'], data['cod'])])
+                self.q.put([Action.add_error, _("Failed to retrieve weather data: {} ({})").format(data['message'], data['cod'])])
                 self.q.put([Action.set_selection, []])
                 return
 
@@ -144,7 +146,7 @@ class Module(ModuleBase):
             try:
                 httpResponse = urlopen("{}/forecast?id={}&appid={}".format(self.baseUrl, cityId, self.key))
             except URLError as e:
-                self.q.put([Action.add_error, "Failed to request weather data: {}".format(e)])
+                self.q.put([Action.add_error, _("Failed to request weather data: {}").format(e)])
                 self.q.put([Action.set_selection, []])
                 return
 
@@ -152,7 +154,7 @@ class Module(ModuleBase):
             try:
                 data = json.loads(responseData)
             except json.JSONDecodeError as e:
-                self.q.put([Action.add_error, "Failed to decode weather data: {}".format(e)])
+                self.q.put([Action.add_error, _("Failed to decode weather data: {}").format(e)])
                 self.q.put([Action.set_selection, []])
                 return
 
@@ -174,7 +176,6 @@ class Module(ModuleBase):
     def selection_made(self, selection):
         if len(selection) == 0:
             self._set_entries()
-            self._set_main_commands()
         elif len(selection) == 1:
             if self.settings['_api_version'] >= [0, 8, 0]:
                 command = selection[0]['value']
@@ -188,7 +189,7 @@ class Module(ModuleBase):
                 # Entry selected, act is if we called the weather/forecast function to
                 # reduce code repetition
                 if self.settings['_api_version'] >= [0, 4, 0]:
-                    if selection[0]['context_option'] == "Forecast":
+                    if selection[0]['context_option'] == _("Forecast"):
                         if self.settings['_api_version'] >= [0, 8, 0]:
                             self.q.put([Action.set_selection, [{'type': SelectionType.command, 'value': 'forecast', 'args': selection[0]['value'].split(" ")}]])
                         else:
@@ -211,10 +212,10 @@ class Module(ModuleBase):
             elif command == "weather":
                 self._show_weather(cityId)
             else:
-                self.q.put([Action.critical_error, "Unexpected selection_made value: {}".format(selection)])
+                self.q.put([Action.critical_error, _("Unexpected selection_made value: {}").format(selection)])
         elif len(selection) == 2:
             if selection[0]["type"] != SelectionType.command:
-                self.q.put([Action.critical_error, "Unexpected selection_made value: {}".format(selection)])
+                self.q.put([Action.critical_error, _("Unexpected selection_made value: {}").format(selection)])
 
             if self.settings['_api_version'] >= [0, 8, 0]:
                 command = selection[0]['value']
@@ -237,13 +238,13 @@ class Module(ModuleBase):
                 self.q.put([Action.copy_to_clipboard, selection[1]["value"]])
                 self.q.put([Action.close])
             else:
-                self.q.put([Action.critical_error, "Unexpected selection_made value: {}".format(selection)])
+                self.q.put([Action.critical_error, _("Unexpected selection_made value: {}").format(selection)])
         elif len(selection) == 3:
             # We can only get this deep if we use forecast, just copy the entry to the clipboard and close
             self.q.put([Action.copy_to_clipboard, selection[2]["value"]])
             self.q.put([Action.close])
         else:
-            self.q.put([Action.critical_error, "Unexpected selection_made value: {}".format(selection)])
+            self.q.put([Action.critical_error, _("Unexpected selection_made value: {}").format(selection)])
 
     def process_response(self, response):
         pass
