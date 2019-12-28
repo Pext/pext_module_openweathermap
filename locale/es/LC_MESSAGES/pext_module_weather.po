@@ -6,47 +6,50 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2019-11-02 18:43+CET\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2019-12-29 02:38+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
+"Language-Team: Spanish <https://hosted.weblate.org/projects/pext/"
+"weather-module/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.10\n"
 "Generated-By: pygettext.py 1.5\n"
 
 #: __init__.py:63
 msgid "Current weather"
-msgstr ""
+msgstr "Tiempo actual"
 
 #: __init__.py:63 __init__.py:192
 msgid "Forecast"
-msgstr ""
+msgstr "Pronóstico"
 
 #: __init__.py:103 __init__.py:149
 msgid "Failed to request weather data: {}"
-msgstr ""
+msgstr "Falló la petición de datos meteorológicos: {}"
 
 #: __init__.py:111 __init__.py:157
 msgid "Failed to decode weather data: {}"
-msgstr ""
+msgstr "Falló la descodificación de los datos meteorológicos: {}"
 
 #: __init__.py:116
 msgid "Failed to retrieve weather data: {} ({})"
-msgstr ""
+msgstr "Falló la recuperación de los datos meteorológicos: {} ({})"
 
 #: __init__.py:215 __init__.py:218 __init__.py:241 __init__.py:247
 msgid "Unexpected selection_made value: {}"
-msgstr ""
+msgstr "Valor de selection_made inesperado: {}"
 
 #: generate_metadata.py:40
 msgid "Weather"
-msgstr ""
+msgstr "El tiempo"
 
 #: generate_metadata.py:42
 msgid "Allows Pext to retrieve weather information from OpenWeatherMap"
-msgstr ""
+msgstr "Permite a Pext recuperar información meteorológica de OpenWeatherMap"
 
 #: generate_metadata.py:50
 msgid "Preferred temperature unit"
-msgstr ""
+msgstr "Unidad de temperatura preferida"
