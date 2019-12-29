@@ -6,47 +6,50 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2019-11-02 18:43+CET\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2019-12-30 12:21+0000\n"
+"Last-Translator: Robin Liu <ribbonrobin@icloud.com>\n"
+"Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
+"pext/weather-module/zh_Hant/>\n"
 "Language: zh_Hant\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 3.10\n"
 "Generated-By: pygettext.py 1.5\n"
 
 #: __init__.py:63
 msgid "Current weather"
-msgstr ""
+msgstr "目前天氣"
 
 #: __init__.py:63 __init__.py:192
 msgid "Forecast"
-msgstr ""
+msgstr "氣象預報"
 
 #: __init__.py:103 __init__.py:149
 msgid "Failed to request weather data: {}"
-msgstr ""
+msgstr "無法取得氣象資料：{}"
 
 #: __init__.py:111 __init__.py:157
 msgid "Failed to decode weather data: {}"
-msgstr ""
+msgstr "無法解讀氣象資料：{}"
 
 #: __init__.py:116
 msgid "Failed to retrieve weather data: {} ({})"
-msgstr ""
+msgstr "無法取得氣象資料：{}（{}）"
 
 #: __init__.py:215 __init__.py:218 __init__.py:241 __init__.py:247
 msgid "Unexpected selection_made value: {}"
-msgstr ""
+msgstr "未預期的 selection_made 值：{}"
 
 #: generate_metadata.py:40
 msgid "Weather"
-msgstr ""
+msgstr "天氣"
 
 #: generate_metadata.py:42
 msgid "Allows Pext to retrieve weather information from OpenWeatherMap"
-msgstr ""
+msgstr "允許 Pext 從 OpenWeatherMap 取得氣象資料"
 
 #: generate_metadata.py:50
 msgid "Preferred temperature unit"
-msgstr ""
+msgstr "溫度單位"
