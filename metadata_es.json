@@ -1,0 +1,33 @@
+{
+  "bugtracker": "https://github.com/Pext/pext_module_openweathermap",
+  "bugtracker_type": "github",
+  "description": "Permite a Pext recuperar informaci\u00f3n meteorol\u00f3gica de OpenWeatherMap",
+  "developer": "Sylvia van Os",
+  "git_urls": [
+    "https://github.com/Pext/pext_module_openweathermap"
+  ],
+  "homepage": "https://pext.io/",
+  "id": "pext.module.weather",
+  "license": "GPL-3.0+",
+  "name": "El tiempo",
+  "platforms": [
+    "Linux",
+    "Darwin",
+    "Windows"
+  ],
+  "settings": [
+    {
+      "default": "\u00b0C",
+      "description": "Unidad de temperatura preferida",
+      "name": "unit",
+      "options": [
+        "\u00b0C",
+        "\u00b0F"
+      ]
+    },
+    {
+      "description": "Custom API key",
+      "name": "key"
+    }
+  ]
+}

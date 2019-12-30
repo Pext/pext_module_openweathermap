@@ -1,0 +1,33 @@
+{
+  "bugtracker": "https://github.com/Pext/pext_module_openweathermap",
+  "bugtracker_type": "github",
+  "description": "Allows Pext to retrieve weather information from OpenWeatherMap",
+  "developer": "Sylvia van Os",
+  "git_urls": [
+    "https://github.com/Pext/pext_module_openweathermap"
+  ],
+  "homepage": "https://pext.io/",
+  "id": "pext.module.weather",
+  "license": "GPL-3.0+",
+  "name": "Weather",
+  "platforms": [
+    "Linux",
+    "Darwin",
+    "Windows"
+  ],
+  "settings": [
+    {
+      "default": "\u00b0C",
+      "description": "Preferred temperature unit",
+      "name": "unit",
+      "options": [
+        "\u00b0C",
+        "\u00b0F"
+      ]
+    },
+    {
+      "description": "Custom API key",
+      "name": "key"
+    }
+  ]
+}

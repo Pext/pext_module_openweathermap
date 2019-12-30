@@ -1,0 +1,33 @@
+{
+  "bugtracker": "https://github.com/Pext/pext_module_openweathermap",
+  "bugtracker_type": "github",
+  "description": "\u5141\u8a31 Pext \u5f9e OpenWeatherMap \u53d6\u5f97\u6c23\u8c61\u8cc7\u6599",
+  "developer": "Sylvia van Os",
+  "git_urls": [
+    "https://github.com/Pext/pext_module_openweathermap"
+  ],
+  "homepage": "https://pext.io/",
+  "id": "pext.module.weather",
+  "license": "GPL-3.0+",
+  "name": "\u5929\u6c23",
+  "platforms": [
+    "Linux",
+    "Darwin",
+    "Windows"
+  ],
+  "settings": [
+    {
+      "default": "\u00b0C",
+      "description": "\u6eab\u5ea6\u55ae\u4f4d",
+      "name": "unit",
+      "options": [
+        "\u00b0C",
+        "\u00b0F"
+      ]
+    },
+    {
+      "description": "Custom API key",
+      "name": "key"
+    }
+  ]
+}
