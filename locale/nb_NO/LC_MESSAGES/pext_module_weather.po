@@ -6,22 +6,25 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2019-11-02 18:43+CET\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2020-01-10 02:21+0000\n"
+"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
+"Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/pext/"
+"weather-module/nb_NO/>\n"
 "Language: nb_NO\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.10.1\n"
 "Generated-By: pygettext.py 1.5\n"
 
 #: __init__.py:63
 msgid "Current weather"
-msgstr ""
+msgstr "Nåværende vær"
 
 #: __init__.py:63 __init__.py:192
 msgid "Forecast"
-msgstr ""
+msgstr "Værvarsel"
 
 #: __init__.py:103 __init__.py:149
 msgid "Failed to request weather data: {}"
