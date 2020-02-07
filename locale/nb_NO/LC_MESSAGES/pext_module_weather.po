@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2019-11-02 18:43+CET\n"
-"PO-Revision-Date: 2020-01-10 02:21+0000\n"
+"PO-Revision-Date: 2020-02-08 18:50+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/pext/"
 "weather-module/nb_NO/>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.10.1\n"
+"X-Generator: Weblate 3.11-dev\n"
 "Generated-By: pygettext.py 1.5\n"
 
 #: __init__.py:63
@@ -28,28 +28,30 @@ msgstr "Værvarsel"
 
 #: __init__.py:103 __init__.py:149
 msgid "Failed to request weather data: {}"
-msgstr ""
+msgstr "Klarte ikke å forespørre værdata: {}"
 
 #: __init__.py:111 __init__.py:157
 msgid "Failed to decode weather data: {}"
-msgstr ""
+msgstr "Klarte ikke å dekode værdata: {}"
 
 #: __init__.py:116
 msgid "Failed to retrieve weather data: {} ({})"
-msgstr ""
+msgstr "Klarte ikke å hente værdata: {} ({})"
 
 #: __init__.py:215 __init__.py:218 __init__.py:241 __init__.py:247
 msgid "Unexpected selection_made value: {}"
-msgstr ""
+msgstr "Uventet selection_made-verdi: {}"
 
 #: generate_metadata.py:40
 msgid "Weather"
-msgstr ""
+msgstr "Vær"
 
 #: generate_metadata.py:42
+#, fuzzy
 msgid "Allows Pext to retrieve weather information from OpenWeatherMap"
-msgstr ""
+msgstr "Lar Pext hente værinfo fra OpenWeatherMap"
 
 #: generate_metadata.py:50
+#, fuzzy
 msgid "Preferred temperature unit"
-msgstr ""
+msgstr "Foretrukken temperaturenhet"
