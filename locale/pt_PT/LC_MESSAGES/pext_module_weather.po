@@ -1,0 +1,52 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2019-12-30 15:43+CET\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: pt_PT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pygettext.py 1.5\n"
+
+#: __init__.py:63
+msgid "Current weather"
+msgstr ""
+
+#: __init__.py:63 __init__.py:192
+msgid "Forecast"
+msgstr ""
+
+#: __init__.py:103 __init__.py:149
+msgid "Failed to request weather data: {}"
+msgstr ""
+
+#: __init__.py:111 __init__.py:157
+msgid "Failed to decode weather data: {}"
+msgstr ""
+
+#: __init__.py:116
+msgid "Failed to retrieve weather data: {} ({})"
+msgstr ""
+
+#: __init__.py:215 __init__.py:218 __init__.py:241 __init__.py:247
+msgid "Unexpected selection_made value: {}"
+msgstr ""
+
+#: generate_metadata.py:40
+msgid "Weather"
+msgstr ""
+
+#: generate_metadata.py:42
+msgid "Allows Pext to retrieve weather information from OpenWeatherMap"
+msgstr ""
+
+#: generate_metadata.py:50
+msgid "Preferred temperature unit"
+msgstr ""
