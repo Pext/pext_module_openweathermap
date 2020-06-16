@@ -1,15 +1,16 @@
 {
   "bugtracker": "https://github.com/Pext/pext_module_openweathermap",
   "bugtracker_type": "github",
-  "description": "Allows Pext to retrieve weather information from OpenWeatherMap",
+  "description": "Autorise Pext \u00e0 r\u00e9cup\u00e9rer les infos m\u00e9t\u00e9o depuis OpenWeatherMap",
   "developer": "Sylvia van Os",
+  "git_branch_stable": "stable",
   "git_urls": [
     "https://github.com/Pext/pext_module_openweathermap"
   ],
   "homepage": "https://pext.io/",
   "id": "pext.module.weather",
   "license": "GPL-3.0+",
-  "name": "Weather",
+  "name": "M\u00e9t\u00e9o",
   "platforms": [
     "Linux",
     "Darwin",
@@ -18,7 +19,7 @@
   "settings": [
     {
       "default": "\u00b0C",
-      "description": "Preferred temperature unit",
+      "description": "Unit\u00e9 de temp\u00e9rature pr\u00e9f\u00e9r\u00e9e",
       "name": "unit",
       "options": [
         "\u00b0C",

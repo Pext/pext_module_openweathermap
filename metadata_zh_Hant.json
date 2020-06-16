@@ -3,6 +3,7 @@
   "bugtracker_type": "github",
   "description": "\u5141\u8a31 Pext \u5f9e OpenWeatherMap \u53d6\u5f97\u6c23\u8c61\u8cc7\u6599",
   "developer": "Sylvia van Os",
+  "git_branch_stable": "stable",
   "git_urls": [
     "https://github.com/Pext/pext_module_openweathermap"
   ],

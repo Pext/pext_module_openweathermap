@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2019-11-02 18:43+CET\n"
+"POT-Creation-Date: 2020-06-16 20:08+CEST\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -47,6 +47,6 @@ msgstr ""
 msgid "Allows Pext to retrieve weather information from OpenWeatherMap"
 msgstr ""
 
-#: generate_metadata.py:50
+#: generate_metadata.py:51
 msgid "Preferred temperature unit"
 msgstr ""

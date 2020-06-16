@@ -5,11 +5,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2019-11-02 18:43+CET\n"
+"POT-Creation-Date: 2020-06-16 20:08+CEST\n"
 "PO-Revision-Date: 2019-12-29 02:38+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
-"Language-Team: Spanish <https://hosted.weblate.org/projects/pext/"
-"weather-module/es/>\n"
+"Language-Team: Spanish <https://hosted.weblate.org/projects/pext/weather-"
+"module/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -50,6 +50,6 @@ msgstr "El tiempo"
 msgid "Allows Pext to retrieve weather information from OpenWeatherMap"
 msgstr "Permite a Pext recuperar información meteorológica de OpenWeatherMap"
 
-#: generate_metadata.py:50
+#: generate_metadata.py:51
 msgid "Preferred temperature unit"
 msgstr "Unidad de temperatura preferida"

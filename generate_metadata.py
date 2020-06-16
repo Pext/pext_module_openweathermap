@@ -43,6 +43,7 @@ for language in languages:
                'homepage': 'https://pext.io/',
                'license': 'GPL-3.0+',
                'git_urls': ['https://github.com/Pext/pext_module_openweathermap'],
+               'git_branch_stable': 'stable',
                'bugtracker': 'https://github.com/Pext/pext_module_openweathermap',
                'bugtracker_type': 'github',
                'settings': [{
