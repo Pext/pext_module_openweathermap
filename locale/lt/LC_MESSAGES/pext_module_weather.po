@@ -6,47 +6,52 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2020-06-16 20:08+CEST\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2021-08-27 10:33+0000\n"
+"Last-Translator: Gediminas Murauskas <muziejusinfo@gmail.com>\n"
+"Language-Team: Lithuanian <https://hosted.weblate.org/projects/pext/"
+"weather-module/lt/>\n"
 "Language: lt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n % 10 == 1 && (n % 100 < 11 || n % 100 > "
+"19)) ? 0 : ((n % 10 >= 2 && n % 10 <= 9 && (n % 100 < 11 || n % 100 > 19)) ? "
+"1 : 2);\n"
+"X-Generator: Weblate 4.8.1-dev\n"
 "Generated-By: pygettext.py 1.5\n"
 
 #: __init__.py:63
 msgid "Current weather"
-msgstr ""
+msgstr "Dabartinis oras"
 
 #: __init__.py:63 __init__.py:192
 msgid "Forecast"
-msgstr ""
+msgstr "Prognozė"
 
 #: __init__.py:103 __init__.py:149
 msgid "Failed to request weather data: {}"
-msgstr ""
+msgstr "Nepavyko užklausti orų duomenų: {}"
 
 #: __init__.py:111 __init__.py:157
 msgid "Failed to decode weather data: {}"
-msgstr ""
+msgstr "Nepavyko iššifruoti orų duomenų: {}"
 
 #: __init__.py:116
 msgid "Failed to retrieve weather data: {} ({})"
-msgstr ""
+msgstr "Nepavyko gauti orų duomenų: {} ({})"
 
 #: __init__.py:215 __init__.py:218 __init__.py:241 __init__.py:247
 msgid "Unexpected selection_made value: {}"
-msgstr ""
+msgstr "Netikėta selection_made reikšmė: {}"
 
 #: generate_metadata.py:40
 msgid "Weather"
-msgstr ""
+msgstr "Orai"
 
 #: generate_metadata.py:42
 msgid "Allows Pext to retrieve weather information from OpenWeatherMap"
-msgstr ""
+msgstr "Leidžia Pext gauti orų informaciją iš OpenWeatherMap"
 
 #: generate_metadata.py:51
 msgid "Preferred temperature unit"
-msgstr ""
+msgstr "Pageidaujamas temperatūros matavimo vienetas"
